@@ -26,5 +26,11 @@
         "imageUrl": "https://images-na.ssl-images-amazon.com/images/I/61HpQqVQ37L._SY355_.jpg",
         "description": "",
         "difficultyLevel": "3"
+    },
+    {
+        "name": "6x6",
+        "description": "Very difficult",
+        "imageUrl": "https://www.tradeinn.com/f/13877/138770322/qiyi-qifang-w-6x6-rubik-cube.jpg",
+        "difficultyLevel": "6"
     }
 ]
