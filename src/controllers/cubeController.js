@@ -14,7 +14,7 @@ router.get('/details/:id', (req, res) => {
 router.post('/create', (req, res) => {
     const cube = req.body;
 
-    cubeService.save(cube)
+    cubeService.create(cube)
         .then(() => {
             res.redirect('/');
         })

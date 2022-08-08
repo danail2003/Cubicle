@@ -1,19 +1,20 @@
 const express = require('express');
-const handlebars = require('express-handlebars');
 const config = require('./config/config');
 const routes = require('./config/routes');
+const { initializeDb } = require('./config/database');
 const app = express();
 
 app.use('/static', express.static('static'));
 app.use(express.urlencoded({ extended: false }));
 
-app.engine('hbs', handlebars.engine({
-    extname: 'hbs'
-}));
-
-app.set('view engine', 'hbs');
-app.set('views', './src/views');
+require('./config/handlebars')(app);
 
 app.use(routes);
 
-app.listen(config.development, () => console.log(`App is listening on port ${config.development.port}`));
+initializeDb()
+    .then(() => {
+        app.listen(config.development, () => console.log(`App is listening on port ${config.development.port}`));
+    })
+    .catch(err => {
+        console.log(err.message);
+    });

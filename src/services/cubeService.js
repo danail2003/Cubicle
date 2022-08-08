@@ -1,29 +1,30 @@
+const Cube = require('../models/Cube');
 const cubes = require('../config/database.json');
+
 const fs = require('fs/promises');
 const path = require('path');
 const uuid = require('uuid');
 
 exports.getAll = (search = '', from = 0, to = 6) => {
-    if (from === '' || to === '') {
-        if (from === '') {
-            from = 0;
-        }
+    // if (from === '' || to === '') {
+    //     if (from === '') {
+    //         from = 0;
+    //     }
 
-        if (to === '') {
-            to = 6;
-        }
-    }
+    //     if (to === '') {
+    //         to = 6;
+    //     }
+    // }
 
-    const result = cubes
-        .filter(x => x.name.toLowerCase().includes(search.toLowerCase()))
-        .filter(x => x.difficultyLevel >= Number(from) && x.difficultyLevel <= Number(to));
+    // const result = cubes
+    //     .filter(x => x.name.toLowerCase().includes(search.toLowerCase()))
+    //     .filter(x => x.difficultyLevel >= Number(from) && x.difficultyLevel <= Number(to));
 
-    return result;
+    // return result;
+
+    return [];
 };
 
-exports.save = (cube) => {
-    cubes.push({ id: uuid.v1(), ...cube });
-    return fs.writeFile(path.resolve('src/config', 'database.json'), JSON.stringify(cubes, '', 4), { encoding: 'utf-8' })
-}
+exports.create = (cube) => Cube.create(cube);
 
-exports.getOne = (cubeId) => cubes.find(x => x.id === cubeId);
+exports.getOne = (cubeId) => Cube.findById(cubeId);
