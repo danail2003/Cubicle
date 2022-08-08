@@ -1,11 +1,8 @@
 const Cube = require('../models/Cube');
-const cubes = require('../config/database.json');
 
-const fs = require('fs/promises');
-const path = require('path');
-const uuid = require('uuid');
+exports.getAll = async (search = '', from = 0, to = 6) => {
+    const cubes = await Cube.find().lean();
 
-exports.getAll = (search = '', from = 0, to = 6) => {
     // if (from === '' || to === '') {
     //     if (from === '') {
     //         from = 0;
@@ -22,9 +19,9 @@ exports.getAll = (search = '', from = 0, to = 6) => {
 
     // return result;
 
-    return [];
+    return cubes;
 };
 
 exports.create = (cube) => Cube.create(cube);
 
-exports.getOne = (cubeId) => Cube.findById(cubeId);
+exports.getOne = (cubeId) => Cube.findById(cubeId).lean();
