@@ -2,23 +2,10 @@ const Accessory = require('../models/Accessory');
 const Cube = require('../models/Cube');
 
 exports.getAll = async (search = '', from = 0, to = 6) => {
-    const cubes = await Cube.find().lean();
+    const fromLevel = Number(from) || 0;
+    const toLevel = Number(to) || 6;
 
-    // if (from === '' || to === '') {
-    //     if (from === '') {
-    //         from = 0;
-    //     }
-
-    //     if (to === '') {
-    //         to = 6;
-    //     }
-    // }
-
-    // const result = cubes
-    //     .filter(x => x.name.toLowerCase().includes(search.toLowerCase()))
-    //     .filter(x => x.difficultyLevel >= Number(from) && x.difficultyLevel <= Number(to));
-
-    // return result;
+    const cubes = Cube.find({ name: { $regex: new RegExp(search, 'i') } }).where('difficultyLevel').lte(toLevel).gte(fromLevel).lean();
 
     return cubes;
 };
