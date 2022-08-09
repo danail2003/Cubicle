@@ -1,3 +1,4 @@
+const Accessory = require('../models/Accessory');
 const Cube = require('../models/Cube');
 
 exports.getAll = async (search = '', from = 0, to = 6) => {
@@ -25,3 +26,16 @@ exports.getAll = async (search = '', from = 0, to = 6) => {
 exports.create = (cube) => Cube.create(cube);
 
 exports.getOne = (cubeId) => Cube.findById(cubeId).lean();
+
+exports.attachAccessory = async (cubeId, accessoryId) => {
+    const cube = await Cube.findById(cubeId);
+    const accessory = await Accessory.findById(accessoryId);
+
+    cube.accessories.push(accessory);
+    accessory.cubes.push(cube);
+
+    cube.save();
+    accessory.save();
+
+    return cube;
+};
