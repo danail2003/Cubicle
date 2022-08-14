@@ -12,6 +12,12 @@ exports.getAll = async (search = '', from = 0, to = 6) => {
 
 exports.create = (cube) => Cube.create(cube);
 
+exports.edit = async (id, data) => {
+    const updatedCube = await Cube.findByIdAndUpdate(id, data);
+
+    return updatedCube;
+};
+
 exports.getOne = (cubeId) => Cube.findById(cubeId).lean();
 
 exports.attachAccessory = async (cubeId, accessoryId) => {
