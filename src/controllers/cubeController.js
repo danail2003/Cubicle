@@ -8,8 +8,9 @@ router.get('/create', isAuth, (req, res) => {
 
 router.get('/details/:id', async (req, res) => {
     const cube = await cubeService.getOne(req.params.id).populate('accessories');
+    const isOwner = cube.owner == req.user?.id;
 
-    res.render('details', { cube });
+    res.render('details', { cube, isOwner });
 });
 
 router.post('/create', isAuth, (req, res) => {
@@ -32,7 +33,7 @@ router.get('/edit/:id', isAuth, async (req, res) => {
     if (!cube) {
         return res.redirect('/404');
     }
-    
+
     if (cube.owner != req.user.id) {
         return res.redirect('/404');
     }
