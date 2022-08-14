@@ -53,4 +53,30 @@ router.post('/edit/:id', isAuth, async (req, res) => {
     res.redirect(`/cube/details/${updatedCube._id}`);
 });
 
+router.get('/delete/:id', isAuth, async (req, res) => {
+    const cube = await cubeService.getOne(req.params.id).lean();
+
+    if (!cube) {
+        return res.redirect('/404');
+    }
+
+    if (cube.owner != req.user.id) {
+        return res.redirect('/404');
+    }
+
+    res.render('delete', { cube });
+});
+
+router.post('/delete/:id', isAuth, async (req, res) => {
+    const cube = await cubeService.getOne(req.params.id).lean();
+
+    if (cube.owner != req.user.id) {
+        return res.redirect('/404');
+    }
+
+    await cubeService.delete(req.params.id);
+
+    res.redirect(`/`);
+});
+
 module.exports = router;

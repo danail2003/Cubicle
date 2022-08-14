@@ -18,6 +18,8 @@ exports.edit = async (id, data) => {
     return updatedCube;
 };
 
+exports.delete = (id) => Cube.findByIdAndRemove(id);
+
 exports.getOne = (cubeId) => Cube.findById(cubeId).lean();
 
 exports.attachAccessory = async (cubeId, accessoryId) => {
