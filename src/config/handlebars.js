@@ -1,4 +1,5 @@
 const handlebars = require('express-handlebars');
+const path = require('path');
 
 module.exports = (app) => {
     app.engine('hbs', handlebars.engine({
